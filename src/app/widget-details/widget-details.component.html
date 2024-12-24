@@ -1,0 +1,34 @@
+<h2>Widget {{ widgetId }} - Details</h2>
+
+<table mat-table [dataSource]="nestedTableData" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element">
+      <input *ngIf="element.editable" [(ngModel)]="element.name" />                     
+      <span *ngIf="!element.editable">{{ element.name }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Details Column -->
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef> Details </th>
+    <td mat-cell *matCellDef="let element">
+      <input *ngIf="element.editable" [(ngModel)]="element.details" />
+      <span *ngIf="!element.editable">{{ element.details }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Actions Column (Edit/Delete) -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button *ngIf="!element.editable" (click)="editRow(element)">Edit</button>
+      <button *ngIf="element.editable" (click)="saveRow(element)">Save</button>
+      <button (click)="deleteRow(element.id)">Delete</button> <!-- Delete button -->
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['name', 'details', 'actions']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['name', 'details', 'actions'];"></tr>
+</table>
